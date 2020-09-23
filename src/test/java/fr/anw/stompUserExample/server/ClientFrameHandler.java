@@ -1,5 +1,6 @@
 package fr.anw.stompUserExample.server;
 
+import fr.anw.stompUserExample.server.entities.Message;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 
@@ -15,7 +16,7 @@ public class ClientFrameHandler implements StompFrameHandler {
 
     @Override
     public Type getPayloadType(StompHeaders headers) {
-        return String.class;
+        return Message.class;
     }
 
     @Override

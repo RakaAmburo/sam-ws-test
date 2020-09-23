@@ -1,4 +1,4 @@
-package fr.anw.stompUserExample.server;
+package fr.anw.stompUserExample.server.controllers;
 
 import fr.anw.stompUserExample.server.entities.Message;
 import org.slf4j.Logger;

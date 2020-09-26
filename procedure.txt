@@ -1,0 +1,28 @@
+4.5 pedidos por personas
+
+15 mesas promedio por resto
+3 por mesa 
+
+24
+
+35 personas pòr hora por resto
+
+
+158 calls por hora por resto
+
+100 000 por hora con 500 restos
+
+1700 por minuto
+
+2000 por minuto
+entre 2000 y 5000 minuto
+
+
+5000 es 133 personas por hora por resto
+
+ulimit modificar ulimit -n 
+
+
+100/1000 600  pedidos por miniuuto 2200 connectiones acctivas cuantos restos son ?
+50/1000  1200 ""                   4400                        ?
+25/1000  2400                      9000

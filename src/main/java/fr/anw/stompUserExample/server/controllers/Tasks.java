@@ -53,11 +53,11 @@ public class Tasks {
             }
           }
           Pair pair = new Pair();
-          if (!container.add(pair)){
+          if (!container.add(pair)) {
             log.error("CAN NOT ADD TO CONTAINER");
             System.exit(1);
           }
-          threadPool.execute(tasks.start(wsUrl, wsTestUtils, pair));
+          threadPool.execute(tasks.start(wsUrl, wsTestUtils, pair, dynParams));
           try {
             Thread.sleep(dynParams.getSleepTime());
           } catch (InterruptedException e) {
@@ -92,7 +92,8 @@ public class Tasks {
     };
   }
 
-  public Runnable start(String wsUrl, WsTestUtils wsTestUtils, Pair connectionPair) {
+  public Runnable start(
+      String wsUrl, WsTestUtils wsTestUtils, Pair connectionPair, DynParams dynParams) {
     return () -> {
       try {
         WebSocketStompClient stompClient = wsTestUtils.createWebSocketClient();
@@ -121,9 +122,14 @@ public class Tasks {
         log.error("INTERRUPTED EX");
         System.exit(1);
       } catch (ExecutionException e) {
-        e.printStackTrace();
-        log.error("execution ex");
-        System.exit(1);
+        log.error("Execution exception");
+        try {
+          wait();
+        } catch (InterruptedException ie) {
+          ie.printStackTrace();
+          log.error("WAITING ERROR");
+          System.exit(1);
+        }
       }
     };
   }

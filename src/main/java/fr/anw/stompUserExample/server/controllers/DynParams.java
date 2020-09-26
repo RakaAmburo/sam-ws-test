@@ -1,23 +1,31 @@
 package fr.anw.stompUserExample.server.controllers;
 
 public class DynParams {
-    public boolean isDoWait() {
-        return doWait;
-    }
+  private boolean doWait = false;
+  private int sleepTime = 1000;
+  private int hangAt;
 
-    public int getSleepTime() {
-        return sleepTime;
-    }
+  public int getHangAt() {
+    return hangAt;
+  }
 
-    private boolean doWait = false;
+  public void setHangAt(int hangAt) {
+    this.hangAt = hangAt;
+  }
 
-    public void setDoWait(boolean doWait) {
-        this.doWait = doWait;
-    }
+  public boolean isDoWait() {
+    return doWait;
+  }
 
-    public void setSleepTime(int sleepTime) {
-        this.sleepTime = sleepTime;
-    }
+  public void setDoWait(boolean doWait) {
+    this.doWait = doWait;
+  }
 
-    private int sleepTime = 1000;
+  public int getSleepTime() {
+    return sleepTime;
+  }
+
+  public void setSleepTime(int sleepTime) {
+    this.sleepTime = sleepTime;
+  }
 }

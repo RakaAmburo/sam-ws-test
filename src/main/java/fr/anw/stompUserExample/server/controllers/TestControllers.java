@@ -65,6 +65,12 @@ public class TestControllers {
     return container.size();
   }
 
+  @GetMapping("/hangAtTest")
+  @ResponseStatus(HttpStatus.OK)
+  public Integer hangAt() {
+    return dynParams.getHangAt();
+  }
+
   @GetMapping("/changeWaitingTime/{time}")
   @ResponseStatus(HttpStatus.OK)
   public void changeWaitingTime(@PathVariable("time") Integer time) {

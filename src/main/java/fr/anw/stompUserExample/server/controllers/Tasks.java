@@ -44,6 +44,7 @@ public class Tasks {
       synchronized (this) {
         while (true) {
           if (dynParams.isDoWait()) {
+            dynParams.setHangAt(container.size());
             try {
               wait();
             } catch (InterruptedException e) {
@@ -122,14 +123,8 @@ public class Tasks {
         log.error("INTERRUPTED EX");
         System.exit(1);
       } catch (ExecutionException e) {
-        log.error("Execution exception");
-        try {
-          wait();
-        } catch (InterruptedException ie) {
-          ie.printStackTrace();
-          log.error("WAITING ERROR");
-          System.exit(1);
-        }
+        log.error("Execution exception", e);
+        dynParams.setDoWait(true);
       }
     };
   }

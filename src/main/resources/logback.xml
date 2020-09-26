@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender" target="System.out">
         <encoder>
             <pattern>%d{mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %class{0}.%M - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <appender name="ASYNC_CONSOLE"
+              class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold> <!-- default 20, means drop lower event when has 20% capacity remaining -->
+        <appender-ref ref="CONSOLE" />
+        <queueSize>1</queueSize> <!-- default 256 -->
+        <includeCallerData>false</includeCallerData><!-- default false -->
+        <neverBlock>true</neverBlock><!-- default false, set to true to cause the
+            Appender not block the application and just drop the messages -->
+    </appender>
+
     <root level="info">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ASYNC_CONSOLE" />
     </root>
+
 </configuration>

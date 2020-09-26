@@ -11,6 +11,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 
@@ -19,29 +20,27 @@ public class Tasks {
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   private TimeOut timeOut = new TimeOut(1, 8);
 
-  public Runnable removerThread(List<Pair> container){
-    List<Pair> delete = new ArrayList<>();
+  public Runnable removerThread(BlockingQueue<Pair> container) {
+
     return () -> {
-      log.info("removing start");
-      container.stream().forEach(connection ->{
-                 if (!connection.isConnected()){
-                   delete.add(connection);
-                 }
-      });
-      delete.stream().forEach(connection ->{
-        container.remove(connection);
-      });
-      log.info("removing end");
+      try {
+        List<Pair> delete = new ArrayList<>();
+        log.info("removing start");
+        container.removeIf(connection -> (connection.isConnected()) ? false : true);
+      } catch (Exception e) {
+        log.error("DELETING THREAD FAILED", e);
+        System.exit(1);
+      }
     };
   }
 
   public Runnable mainThread(
-      ExecutorService threadPool, List<Pair> container, DynParams dynParams) {
+      ExecutorService threadPool, BlockingQueue<Pair> container, DynParams dynParams) {
     return () -> {
       Tasks tasks = new Tasks();
       int loop = 20;
       WsTestUtils wsTestUtils = new WsTestUtils();
-      String wsUrl = "ws://127.0.0.1:" + "8080" + WsConfig.ENDPOINT_CONNECT;
+      String wsUrl = "ws://192.168.1.132:" + "8080" + WsConfig.ENDPOINT_CONNECT;
       synchronized (this) {
         while (true) {
           if (dynParams.isDoWait()) {
@@ -49,15 +48,22 @@ public class Tasks {
               wait();
             } catch (InterruptedException e) {
               e.printStackTrace();
+              log.error("WAITING ERROR");
+              System.exit(1);
             }
           }
           Pair pair = new Pair();
+          if (!container.add(pair)){
+            log.error("CAN NOT ADD TO CONTAINER");
+            System.exit(1);
+          }
           threadPool.execute(tasks.start(wsUrl, wsTestUtils, pair));
-          container.add(pair);
           try {
             Thread.sleep(dynParams.getSleepTime());
           } catch (InterruptedException e) {
             e.printStackTrace();
+            log.error("SLEEP ERROR");
+            System.exit(1);
           }
         }
       }
@@ -78,12 +84,11 @@ public class Tasks {
     };
   }
 
-  public Runnable sendAskFoodRetry(
-      StompSession session, int delay) {
+  public Runnable sendAskFoodRetry(StompSession session, int delay) {
     return () -> {
       Message message = null;
       message = Message.builder().haveIt(true).content("and whatAbout " + delay).build();
-      session.send( RegisterController.ENDPOINT_REGISTER, message);
+      session.send(RegisterController.ENDPOINT_REGISTER, message);
     };
   }
 
@@ -113,8 +118,12 @@ public class Tasks {
 
       } catch (InterruptedException e) {
         e.printStackTrace();
+        log.error("INTERRUPTED EX");
+        System.exit(1);
       } catch (ExecutionException e) {
         e.printStackTrace();
+        log.error("execution ex");
+        System.exit(1);
       }
     };
   }

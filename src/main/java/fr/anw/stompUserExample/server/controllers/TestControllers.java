@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @RestController
 public class TestControllers {
@@ -23,7 +20,8 @@ public class TestControllers {
   private Runnable main;
   private DynParams dynParams = new DynParams();
 
-  private List<Pair> container = Collections.synchronizedList(new ArrayList<Pair>());
+  private BlockingQueue<Pair> container = new LinkedBlockingDeque<>();
+  //private List<Pair> container = Collections.synchronizedList(new ArrayList<Pair>());
   private Tasks tasks = new Tasks();
 
   @GetMapping("/startTest")

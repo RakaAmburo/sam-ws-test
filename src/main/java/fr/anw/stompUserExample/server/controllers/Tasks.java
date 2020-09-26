@@ -53,12 +53,8 @@ public class Tasks {
               System.exit(1);
             }
           }
-          Pair pair = new Pair();
-          if (!container.add(pair)) {
-            log.error("CAN NOT ADD TO CONTAINER");
-            System.exit(1);
-          }
-          threadPool.execute(tasks.start(wsUrl, wsTestUtils, pair, dynParams));
+
+          threadPool.execute(tasks.start(wsUrl, wsTestUtils, dynParams, container));
           try {
             Thread.sleep(dynParams.getSleepTime());
           } catch (InterruptedException e) {
@@ -94,14 +90,19 @@ public class Tasks {
   }
 
   public Runnable start(
-      String wsUrl, WsTestUtils wsTestUtils, Pair connectionPair, DynParams dynParams) {
+      String wsUrl, WsTestUtils wsTestUtils, DynParams dynParams, BlockingQueue<Pair> container) {
     return () -> {
       try {
+        Pair pair = new Pair();
         WebSocketStompClient stompClient = wsTestUtils.createWebSocketClient();
         StompSession stompSession = stompClient.connect(wsUrl, new ClientSessionHandler()).get();
-        connectionPair.setWebSocketStompClient(stompClient);
-        connectionPair.setStompSession(stompSession);
-        connectionPair.setConnected(true);
+        pair.setWebSocketStompClient(stompClient);
+        pair.setStompSession(stompSession);
+        pair.setConnected(true);
+        if (!container.add(pair)) {
+          log.error("CAN NOT ADD TO CONTAINER");
+          System.exit(1);
+        }
         stompSession.subscribe(
             WsConfig.SUBSCRIBE_USER_PREFIX + WsConfig.SUBSCRIBE_USER_REPLY,
             new ClientFrameHandler(
@@ -113,7 +114,7 @@ public class Tasks {
                           + "(cli): "
                           + ((Message) payload).getContent());
                 },
-                connectionPair));
+                pair));
         stompSession.send(
             RegisterController.ENDPOINT_REGISTER,
             Message.builder().content("I what that food").build());

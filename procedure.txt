@@ -25,4 +25,11 @@ ulimit modificar ulimit -n
 
 100/1000 600  pedidos por miniuuto 2200 connectiones acctivas cuantos restos son ?
 50/1000  1200 ""                   4400                        ?
-25/1000  2400                      9000
+40                                 5400
+35                                 6400
+30/1000  2000                      7300                                            16144
+25/1000  2400                      9000                                            15497 client hangs
+
+falla cliente puede que el server no tenga mas. Mas alla de eso el server en 30 empieza a acumular mal
+revisar como queda el server despues del lio, por lo que vi queda con la memoria alta
+ver el procesador del server y el cliente cuando pasa el error. Si queda resto pdria segir configurando

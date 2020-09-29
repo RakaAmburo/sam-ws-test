@@ -25,8 +25,9 @@ public class RegisterController {
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
   private SimpMessagingTemplate messagingTemplate;
-  private List<String> usersIds = new ArrayList<>();
+  //private List<String> usersIds = new ArrayList<>();
   private TimeOut timeOut = new TimeOut(60, 300);
+  private Tasks tasks = new Tasks();
 
   @Autowired
   public RegisterController(SimpMessagingTemplate messagingTemplate) {
@@ -37,8 +38,8 @@ public class RegisterController {
   public void register(@Payload Message payload, Principal principal) throws Exception {
     String username = principal.getName();
     log.info("register:user=" + username + ",pl=" + payload.getContent());
-    usersIds.add(username);
-    Tasks tasks = new Tasks();
+    //usersIds.add(username);
+
     int delay = timeOut.setRandomTimeOut();
     Runnable msgBack = tasks.sendResponseBack(messagingTemplate, username, delay);
     scheduler.schedule(msgBack, delay, TimeUnit.SECONDS );
@@ -50,7 +51,7 @@ public class RegisterController {
     // "+payload);
   }
 
-  @MessageMapping("/start")
+  /*@MessageMapping("/start")
   public void start(@Payload Message payload, Principal principal) {
     log.info("starting send");
     log.info(String.valueOf(usersIds.size()));
@@ -64,5 +65,5 @@ public class RegisterController {
                   Message.builder().content("Thanks mister " + u).build());
             });
     log.info("finished sent");
-  }
+  }*/
 }

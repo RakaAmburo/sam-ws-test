@@ -8,6 +8,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Assign a random username as principal for each websocket client.
@@ -21,7 +22,7 @@ public class AssignPrincipalHandshakeHandler extends DefaultHandshakeHandler {
                                           Map<String, Object> attributes) {
             final String name;
             if (!attributes.containsKey(ATTR_PRINCIPAL)) {
-                name = generateRandomUsername();
+                name = UUID.randomUUID().toString();
                 attributes.put(ATTR_PRINCIPAL,name);
             }
             else {

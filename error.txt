@@ -1,0 +1,60 @@
+       at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServerRecursive(WsWebSocketContainer.java:493)
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServer(WsWebSocketContainer.java:197)
+        at org.springframework.web.socket.client.standard.StandardWebSocketClient.lambda$doHandshakeInternal$0(StandardWebSocketClient.java:151)
+        at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+        ... 1 common frames omitted
+Caused by: java.util.concurrent.ExecutionException: java.io.IOException: Unknown error: 0x034
+        at java.base/sun.nio.ch.PendingFuture.get(PendingFuture.java:200)
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServerRecursive(WsWebSocketContainer.java:347)
+        ... 4 common frames omitted
+Caused by: java.io.IOException: Unknown error: 0x034
+        at java.base/sun.nio.ch.Iocp.translateErrorToIOException(Iocp.java:299)
+        at java.base/sun.nio.ch.Iocp$EventHandlerTask.run(Iocp.java:389)
+        ... 1 common frames omitted
+29:23.911 [WebSocketClient-AsyncIO-13] INFO  ?.? - afterConnected: username=kEMMWRiMdsRf7fxh7TinfSYVsQvvTcbK
+29:23.912 [WebSocketClient-AsyncIO-13] INFO  ?.? - afterConnected: username=7q4kVxKpxBgNpFEjL5KspnLUw3nJ7vWa
+29:23.942 [pool-2-thread-4] ERROR ?.? - Execution exception
+java.util.concurrent.ExecutionException: javax.websocket.DeploymentException: The HTTP request to initiate the WebSocket connection to [ws://192.168.1.132:8080/connect] failed
+        at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+        at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+        at org.springframework.util.concurrent.SettableListenableFuture.get(SettableListenableFuture.java:119)
+        at fr.anw.stompUserExample.server.controllers.Tasks.lambda$start$6(Tasks.java:98)
+        at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+        at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+        at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: javax.websocket.DeploymentException: The HTTP request to initiate the WebSocket connection to [ws://192.168.1.132:8080/connect] failed
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServerRecursive(WsWebSocketContainer.java:493)
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServer(WsWebSocketContainer.java:197)
+        at org.springframework.web.socket.client.standard.StandardWebSocketClient.lambda$doHandshakeInternal$0(StandardWebSocketClient.java:151)
+        at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+        ... 1 common frames omitted
+Caused by: java.util.concurrent.ExecutionException: java.io.IOException: Unknown error: 0x034
+        at java.base/sun.nio.ch.PendingFuture.get(PendingFuture.java:200)
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServerRecursive(WsWebSocketContainer.java:347)
+        ... 4 common frames omitted
+Caused by: java.io.IOException: Unknown error: 0x034
+        at java.base/sun.nio.ch.Iocp.translateErrorToIOException(Iocp.java:299)
+        at java.base/sun.nio.ch.Iocp$EventHandlerTask.run(Iocp.java:389)
+        ... 1 common frames omitted
+29:23.971 [pool-2-thread-4] ERROR ?.? - Execution exception
+java.util.concurrent.ExecutionException: javax.websocket.DeploymentException: The HTTP request to initiate the WebSocket connection to [ws://192.168.1.132:8080/connect] failed
+        at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+        at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+        at org.springframework.util.concurrent.SettableListenableFuture.get(SettableListenableFuture.java:119)
+        at fr.anw.stompUserExample.server.controllers.Tasks.lambda$start$6(Tasks.java:98)
+        at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+        at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+        at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: javax.websocket.DeploymentException: The HTTP request to initiate the WebSocket connection to [ws://192.168.1.132:8080/connect] failed
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServerRecursive(WsWebSocketContainer.java:493)
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServer(WsWebSocketContainer.java:197)
+        at org.springframework.web.socket.client.standard.StandardWebSocketClient.lambda$doHandshakeInternal$0(StandardWebSocketClient.java:151)
+        at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+        ... 1 common frames omitted
+Caused by: java.util.concurrent.ExecutionException: java.io.IOException: Unknown error: 0x034
+        at java.base/sun.nio.ch.PendingFuture.get(PendingFuture.java:200)
+        at org.apache.tomcat.websocket.WsWebSocketContainer.connectToServerRecursive(WsWebSocketContainer.java:347)
+        ... 4 common frames omitted
+Caused by: java.io.IOException: Unknown error: 0x034
+        at java.base/sun.nio.ch.Iocp.translateErrorToIOException(Iocp.java:299)
+        at java.base/sun.nio.ch.Iocp$EventHandlerTask.run(Iocp.java:389)

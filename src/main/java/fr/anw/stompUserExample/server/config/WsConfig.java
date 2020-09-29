@@ -46,19 +46,19 @@ public class WsConfig implements WebSocketMessageBrokerConfigurer {
     @EventListener
     public void handleSubscribeEvent(SessionSubscribeEvent event) {
         //log.info("<==> handleSubscribeEvent: username="+event.getUser().getName()+", event="+event);
-        log.info("<==> username="+event.getUser().getName());
+        log.info("subc username="+event.getUser().getName());
 
     }
 
     @EventListener
     public void handleConnectEvent(SessionConnectEvent event) {
         //log.info("===> handleConnectEvent: username="+event.getUser().getName()+", event="+event);
-        log.info("=> username="+event.getUser().getName());
+        log.info("conn username="+event.getUser().getName());
     }
 
     @EventListener
     public void handleDisconnectEvent(SessionDisconnectEvent event) {
         //log.info("<=== handleDisconnectEvent: username="+event.getUser().getName()+", event="+event);
-        log.info("=> username="+event.getUser().getName());
+        log.info("disc username="+event.getUser().getName());
     }
 }

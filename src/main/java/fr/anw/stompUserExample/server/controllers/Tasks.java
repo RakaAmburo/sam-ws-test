@@ -9,8 +9,6 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -19,12 +17,13 @@ public class Tasks {
 
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   private TimeOut timeOut = new TimeOut(1, 8);
+  private WsTestUtils wsTestUtils = new WsTestUtils();
 
   public Runnable removerThread(BlockingQueue<Pair> container) {
 
     return () -> {
       try {
-        List<Pair> delete = new ArrayList<>();
+        //List<Pair> delete = new ArrayList<>();
         log.info("removing start");
         container.removeIf(connection -> (connection.isConnected()) ? false : true);
       } catch (Exception e) {
@@ -37,9 +36,8 @@ public class Tasks {
   public Runnable mainThread(
       ExecutorService threadPool, BlockingQueue<Pair> container, DynParams dynParams) {
     return () -> {
-      Tasks tasks = new Tasks();
-      int loop = 20;
-      WsTestUtils wsTestUtils = new WsTestUtils();
+      //int loop = 20;
+
       String wsUrl = "ws://192.168.1.132:" + "8080" + WsConfig.ENDPOINT_CONNECT;
       synchronized (this) {
         while (true) {
@@ -54,7 +52,7 @@ public class Tasks {
             }
           }
 
-          threadPool.execute(tasks.start(wsUrl, wsTestUtils, dynParams, container));
+          threadPool.execute(this.start(wsUrl, wsTestUtils, dynParams, container));
           try {
             Thread.sleep(dynParams.getSleepTime());
           } catch (InterruptedException e) {

@@ -23,7 +23,7 @@ entre 2000 y 5000 minuto
 ulimit modificar ulimit -n 
 
 
-100/1000 600  pedidos por miniuuto 2200 connectiones acctivas cuantos restos son ?
+100/1000 600  pedidos por miniuuto 2200 connectiones acctivas cuantos restos son ? process 3.66
 50/1000  1200 ""                   4400                        ?
 40                                 5400
 35                                 6400

@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 public class RegisterController {
   public static final String ENDPOINT_REGISTER = "/register";
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-  ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
   private SimpMessagingTemplate messagingTemplate;
   //private List<String> usersIds = new ArrayList<>();
   private TimeOut timeOut = new TimeOut(60, 300);
@@ -42,7 +41,9 @@ public class RegisterController {
 
     int delay = timeOut.setRandomTimeOut();
     Runnable msgBack = tasks.sendResponseBack(messagingTemplate, username, delay);
+    ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     scheduler.schedule(msgBack, delay, TimeUnit.SECONDS );
+    scheduler.shutdown();
     /*messagingTemplate.convertAndSendToUser(
         username,
         WsConfig.SUBSCRIBE_USER_REPLY,
